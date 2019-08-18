@@ -19,7 +19,7 @@ class App extends Component {
 
 export default App
 
-// For use with files FoodIdeas AND RECIPES 
+// For use with files FoodIdeas AND RECIPES
 // // const API = 'https://api.edamam.com/search?q=chicken&app_id=$6004b4a7&app_key=$fa6b448896dc28a62ede878f372078ac';
 // const API = 'https://www.food2fork.com/api/search?key=71bae224f882832faa9eb76d7471cbfd&q=';
 // const DEFAULT_QUERY = 'chicken';
