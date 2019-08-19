@@ -1,64 +1,100 @@
-import React, { Component } from 'react'
-import FoodIdeas from './components/recipes'
-import FetchRandomRecipe from './components/FetchRandomRecipe'
+import React, {Component} from 'react';
 
 
-class App extends Component {
+const API_URL = 'https://www.food2fork.com/api/search?key=71bae224f882832faa9eb76d7471cbfd&q=';
+const RESULT_DEFAULT_STATE = {};
+
+export default class AppClass extends Component {
     state = {
-      visible: true
+        ingredient1: '',
+        ingredient2: '',
+        recipesResult: {}
     };
 
-    render(){
-      return (
-        <div>
-          <FetchRandomRecipe />
-        </div>
-      );
+    setIngredient1 = (ingredient1) => {
+        this.setState({ingredient1})
+    };
+
+    setIngredient2 = (ingredient2) => {
+        this.setState({ingredient2})
+    };
+
+    setRecipesResult = (recipesResult) => {
+        this.setState({recipesResult})
+    };
+
+    onSubmit = (event) => {
+        event.preventDefault();
+
+        const {ingredient1, ingredient2} = this.state;
+
+        this.setRecipesResult(RESULT_DEFAULT_STATE);
+
+        fetch(`${API_URL}${ingredient1},${ingredient2}`)
+            .then(_ => _.json())
+            .then(this.setRecipesResult)
+            .catch(console.error)
+    };
+
+    render() {
+        const {ingredient1, ingredient2, recipesResult} = this.state;
+        const {count = 0, recipes = []} = recipesResult;
+
+        return (
+            <div className="container">
+                <header className="App-header">
+                 <h1 className="my-5 text-center"> Recipe Genie </h1>
+                  <h2 className= "my-3 text-center"> Making magic happen in the kitchen since 2019 </h2>
+                    <h3>What ingredients would you like to cook with today?</h3>
+                    <form onSubmit={this.onSubmit}> {}
+                    <label > Ingredient 1: </label>
+                        <input
+                            type="text"
+                            required
+                            className="form-control"
+                            value={ingredient1}
+                            placeholder="Choose your first ingredient"
+                            onChange={({target}) => this.setIngredient1(target.value)}/>
+                      <label > Ingredient 2: </label>
+                        <input
+                            type="text"
+                            required
+                            className="form-control"
+                            value={ingredient2}
+                            placeholder="Choose a second ingredient"
+                            onChange={({target}) => this.setIngredient2(target.value)}/>
+                        <button className="btn-success" disabled={!(ingredient1 && ingredient2)}>
+                            Find recipe ideas!
+                        </button>
+                    </form>
+                </header>
+                <main>
+                    {count > 0
+                        ? <div>
+                            <h3>Showing {count.toLocaleString()} results for {ingredient1} and {ingredient2}</h3>
+                            {recipes.map((recipe, index) => <div key={index}>
+                                <p>
+
+                                    {index + 1}:&nbsp;
+                                    <a href={recipe.source_url} >{recipe.title}</a> by&nbsp;
+                                    <a href={recipe.publisher_url}>{recipe.publisher}</a> &nbsp;
+                                    <img src={recipe.image_url}/>
+                                </p>
+                            </div>)}
+                        </div>
+                        : <h3>No results...</h3>
+                    }
+                </main>
+            </div>
+        );
     }
 }
-
-export default App
-
-// For use with files FoodIdeas AND RECIPES
-// // const API = 'https://api.edamam.com/search?q=chicken&app_id=$6004b4a7&app_key=$fa6b448896dc28a62ede878f372078ac';
-// const API = 'https://www.food2fork.com/api/search?key=71bae224f882832faa9eb76d7471cbfd&q=';
-// const DEFAULT_QUERY = 'chicken';
-//
-//   class App extends Component {
-//     constructor(props) {
-//       super(props);
-//
-//       this.state = {
-//         foodIdeas: []
-//       };
-//     }
-//
-//      componentDidMount(){
-//        fetch(API + DEFAULT_QUERY)
-//        .then(res => res.json())
-//        .then((data) => {
-//
-//          this.setState ({foodIdeas: data.recipes})
-//
-//        })
-//        .catch(console.log)
-//      }
-//
-//      render() {
-//        return (
-//          <FoodIdeas foodIdeas = {this.state.foodIdeas} />
-//        )
-//      }
-//    }
-//
-// export default App
-
 
 // Original key = 69810c988c6c70e14035a686640d095d
 // https://www.food2fork.com/api/search?key=71bae224f882832faa9eb76d7471cbfd&q=chicken
 //
 //
-// New website
+// New website if food2fork doesn't play nice
 // ID = 6004b4a7
 // key = fa6b448896dc28a62ede878f372078ac	—
 // https://api.edamam.com/search?q=chicken&app_id=${YOUR_APP_ID}&app_key=${YOUR_APP_KEY}&from=0&to=3&calories=591-722&health=alcohol-free
