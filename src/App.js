@@ -1,10 +1,9 @@
-
 import React, {Component} from 'react';
-import ls from 'local-storage'
 
-
-const API_URL = 'https://www.food2fork.com/api/search?key=6eae1e8c9a3e84f5952d0d0241433020&q=';
+const API_URL = 'https://www.food2fork.com/api/search?key=44af67ba8f8f1d746620b2c57f0f8741&q=';
 const RESULT_DEFAULT_STATE = {};
+let results = [];
+let infoList = [];
 
 export default class AppClass extends Component {
     state = {
@@ -28,28 +27,35 @@ export default class AppClass extends Component {
 
     handleChange = (event) => {
 
-      let title = document.getElementById('recipeTitle');
-      console.log(title);
-      localStorage.setItem('myKey', title);
-      const savedList = localStorage.getItem('myKey');
-      console.log(savedList);
+        for (let i = 0; i < results.length; i++) {
+            let children = results[i].getElementsByClassName("rememberMe");
+            if (children[i].checked) {
+                infoList[i] = results[i].getElementsByClassName("recipeUrl");
+            }
+        }
 
-     };
+        for (let i = 0; i < infoList.length; i++) {
+            let id = 0;
+            let idString = id + "";
+            localStorage.setItem(idString, infoList[i]);
+            id++;
+        }
+        this.setState(this.state.savedFood);
+    };
 
-      getSavedFood(){
-        console.log("you made it here");
+    getSavedFood() {
         const yoda = 'yoda man'
         localStorage.setItem('luke', yoda);
         const who = localStorage.getItem('luke');
         console.log(who);
-      }
+    }
 
-     componentDidMount(){
-       this.getSavedFood();
-     }
+    componentDidMount() {
+        this.getSavedFood();
+    }
 
-   onSubmit = (event) => {
-      event.preventDefault();
+    onSubmit = (event) => {
+        event.preventDefault();
 
         const {ingredient1, ingredient2} = this.state;
 
@@ -58,10 +64,10 @@ export default class AppClass extends Component {
         fetch(`${API_URL}${ingredient1},${ingredient2}`)
             .then(_ => _.json())
             .then(this.setRecipesResult)
-            .catch(console.error)
+            .catch(console.error);
 
-
-   };
+        results = document.getElementsByClassName("resultbox");
+    };
 
     render() {
         const {ingredient1, ingredient2, recipesResult} = this.state;
@@ -96,22 +102,25 @@ export default class AppClass extends Component {
                             </button>
                         </div>
                     </form>
+                    <button id="btn-save" onClick={this.handleChange}>Save recipes</button>
                 </header>
-                <main>
+                <main id="results">
                     {count > 0
-                        ? <div>
+                        ? <div className="resultList">
                             <h3>Showing {count.toLocaleString()} results for {ingredient1} and {ingredient2}</h3>
-                            {recipes.map((recipe, index) => <div className="resultbox" key={index}>
-                                <p className="resulttext">
+                            {recipes.map((recipe, index) =>
+                                <div className="resultbox" key={index}>
+                                    <p className="resulttext">
 
-                                    {index + 1}:&nbsp;
-                                    <a id="recipeTitle" href={recipe.source_url}>{recipe.title}</a> by&nbsp;
-                                    <a href={recipe.publisher_url}>{recipe.publisher}</a> &nbsp;
-                                    <img src={recipe.image_url} alt={recipe.title}/>
+                                        {index + 1}:&nbsp;
+                                        <a className="recipeUrl" href={recipe.source_url}>{recipe.title}</a> by&nbsp;
+                                        <a href={recipe.publisher_url}>{recipe.publisher}</a> &nbsp;
+                                        <img src={recipe.image_url} alt={recipe.title}/>
 
-                                </p>
-                                <label> <input name="rememberMe" type="checkBox" checked={this.state.savedFood} onChange={this.handleChange}/> Save me </label>
-                            </div>)}
+                                    </p>
+                                    <label> <input className="rememberMe" type="checkBox"
+                                    /> Save me </label>
+                                </div>)}
                         </div>
                         : <h3>No results...</h3>
                     }
