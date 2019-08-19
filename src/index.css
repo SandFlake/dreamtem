@@ -7,10 +7,35 @@ body {
 }
 
 hr {
+    float: right;
     height: 12px;
     border: 0;
     box-shadow: inset 0 12px 12px -12px rgba(0, 0, 0, 0.5);
 }
+
+img {
+    height: 100%;
+    padding: 5px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+.resulttext{
+    text-align: left;
+    width: 80%;
+}
+
+
+.buttondivlmao {
+    text-align: center;
+}
+
+.resultbox {
+    background: bisque;
+    border: 2px black solid;
+    position: relative;
+}
+
 
 .alert-dark {
     background: black;
@@ -19,10 +44,12 @@ hr {
 .titleAlert ul {
     display: inline;
 }
+
 .titleAlert li {
     list-style-type: none;
     display: inline;
 }
+
 .titleAlert img {
     width: 100px;
     height: auto;
@@ -38,5 +65,21 @@ hr {
 }
 
 .bodydiv {
-  color: white;
+    color: white;
+}
+
+/* #### Mobile Phones #### */
+@media screen and (max-device-width: 765px) {
+    img {
+        height: 100%;
+        max-width: 20%;
+    }
+}
+
+
+/* #### Tablets #### */
+@media screen and (min-device-width: 766px) and (max-device-width: 1024px) {
+    img {
+        height: 100%;
+    }
 }

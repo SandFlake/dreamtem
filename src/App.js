@@ -43,11 +43,11 @@ export default class AppClass extends Component {
         return (
             <div className="container">
                 <header className="App-header">
-                 <h1 className="my-5 text-center"> Recipe Genie </h1>
-                  <h2 className= "my-3 text-center"> Making magic happen in the kitchen since 2019 </h2>
+                    <h1 className="my-5 text-center"> Recipe Genie </h1>
+                    <h2 className="my-3 text-center"> Making magic happen in the kitchen since 2019 </h2>
                     <h3>What ingredients would you like to cook with today?</h3>
                     <form onSubmit={this.onSubmit}> {}
-                    <label > Ingredient 1: </label>
+                        <label> Ingredient 1: </label>
                         <input
                             type="text"
                             required
@@ -55,7 +55,7 @@ export default class AppClass extends Component {
                             value={ingredient1}
                             placeholder="Choose your first ingredient"
                             onChange={({target}) => this.setIngredient1(target.value)}/>
-                      <label > Ingredient 2: </label>
+                        <label> Ingredient 2: </label>
                         <input
                             type="text"
                             required
@@ -63,22 +63,24 @@ export default class AppClass extends Component {
                             value={ingredient2}
                             placeholder="Choose a second ingredient"
                             onChange={({target}) => this.setIngredient2(target.value)}/>
-                        <button className="btn-success" disabled={!(ingredient1 && ingredient2)}>
-                            Find recipe ideas!
-                        </button>
+                        <div className="buttondivlmao">
+                            <button className="btn-success" disabled={!(ingredient1 && ingredient2)}>
+                                Find recipe ideas!
+                            </button>
+                        </div>
                     </form>
                 </header>
                 <main>
                     {count > 0
                         ? <div>
                             <h3>Showing {count.toLocaleString()} results for {ingredient1} and {ingredient2}</h3>
-                            {recipes.map((recipe, index) => <div key={index}>
-                                <p>
+                            {recipes.map((recipe, index) => <div className="resultbox" key={index}>
+                                <p className="resulttext">
 
                                     {index + 1}:&nbsp;
-                                    <a href={recipe.source_url} >{recipe.title}</a> by&nbsp;
+                                    <a href={recipe.source_url}>{recipe.title}</a> by&nbsp;
                                     <a href={recipe.publisher_url}>{recipe.publisher}</a> &nbsp;
-                                    <img src={recipe.image_url}/>
+                                    <img src={recipe.image_url} alt={recipe.title}/>
                                 </p>
                             </div>)}
                         </div>
