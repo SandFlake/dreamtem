@@ -1,13 +1,16 @@
+
 import React, {Component} from 'react';
+import ls from 'local-storage'
 
 
-const API_URL = 'https://www.food2fork.com/api/search?key=71bae224f882832faa9eb76d7471cbfd&q=';
+const API_URL = 'https://www.food2fork.com/api/search?key=6eae1e8c9a3e84f5952d0d0241433020&q=';
 const RESULT_DEFAULT_STATE = {};
 
 export default class AppClass extends Component {
     state = {
         ingredient1: '',
         ingredient2: '',
+        savedFood: false,
         recipesResult: {}
     };
 
@@ -23,8 +26,30 @@ export default class AppClass extends Component {
         this.setState({recipesResult})
     };
 
-    onSubmit = (event) => {
-        event.preventDefault();
+    handleChange = (event) => {
+
+      let title = document.getElementById('recipeTitle');
+      console.log(title);
+      localStorage.setItem('myKey', title);
+      const savedList = localStorage.getItem('myKey');
+      console.log(savedList);
+
+     };
+
+      getSavedFood(){
+        console.log("you made it here");
+        const yoda = 'yoda man'
+        localStorage.setItem('luke', yoda);
+        const who = localStorage.getItem('luke');
+        console.log(who);
+      }
+
+     componentDidMount(){
+       this.getSavedFood();
+     }
+
+   onSubmit = (event) => {
+      event.preventDefault();
 
         const {ingredient1, ingredient2} = this.state;
 
@@ -34,7 +59,9 @@ export default class AppClass extends Component {
             .then(_ => _.json())
             .then(this.setRecipesResult)
             .catch(console.error)
-    };
+
+
+   };
 
     render() {
         const {ingredient1, ingredient2, recipesResult} = this.state;
@@ -78,10 +105,12 @@ export default class AppClass extends Component {
                                 <p className="resulttext">
 
                                     {index + 1}:&nbsp;
-                                    <a href={recipe.source_url}>{recipe.title}</a> by&nbsp;
+                                    <a id="recipeTitle" href={recipe.source_url}>{recipe.title}</a> by&nbsp;
                                     <a href={recipe.publisher_url}>{recipe.publisher}</a> &nbsp;
                                     <img src={recipe.image_url} alt={recipe.title}/>
+
                                 </p>
+                                <label> <input name="rememberMe" type="checkBox" checked={this.state.savedFood} onChange={this.handleChange}/> Save me </label>
                             </div>)}
                         </div>
                         : <h3>No results...</h3>
@@ -94,6 +123,7 @@ export default class AppClass extends Component {
 
 // Original key = 69810c988c6c70e14035a686640d095d
 // https://www.food2fork.com/api/search?key=71bae224f882832faa9eb76d7471cbfd&q=chicken
+// key3 = 6eae1e8c9a3e84f5952d0d0241433020
 //
 //
 // New website if food2fork doesn't play nice
