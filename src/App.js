@@ -1,17 +1,18 @@
 
 import React, {Component} from 'react';
 import ls from 'local-storage'
+// import SavedRecipes from './SavedRecipes'
+import ReactDOM from 'react-dom';
 
 
-const API_URL = 'https://www.food2fork.com/api/search?key=6eae1e8c9a3e84f5952d0d0241433020&q=';
+const API_URL = 'https://www.food2fork.com/api/search?key=44af67ba8f8f1d746620b2c57f0f8741&q=';
 const RESULT_DEFAULT_STATE = {};
 
 export default class AppClass extends Component {
     state = {
         ingredient1: '',
         ingredient2: '',
-        savedFood: false,
-        recipesResult: {}
+        recipesResult: {},
     };
 
     setIngredient1 = (ingredient1) => {
@@ -26,27 +27,41 @@ export default class AppClass extends Component {
         this.setState({recipesResult})
     };
 
+
     handleChange = (event) => {
 
-      let title = document.getElementById('recipeTitle');
-      console.log(title);
-      localStorage.setItem('myKey', title);
-      const savedList = localStorage.getItem('myKey');
-      console.log(savedList);
+
+      var list = [];
+      let itemUrl = document.getElementById('recipeTitle');
+      console.log(itemUrl);
+      list.push(itemUrl);
+      console.log(list);
+      localStorage.setItem('myKey', itemUrl);
 
      };
 
-      getSavedFood(){
-        console.log("you made it here");
-        const yoda = 'yoda man'
-        localStorage.setItem('luke', yoda);
-        const who = localStorage.getItem('luke');
-        console.log(who);
-      }
+   showList = () => {
 
-     componentDidMount(){
-       this.getSavedFood();
+      var result=  localStorage.getItem('myKey');
+
+       console.log("hello " + result);
+
+
+
+
      }
+
+     //  getSavedFood(){
+     //    console.log("you made it here");
+     //    const yoda = 'yoda man'
+     //    localStorage.setItem('luke', yoda);
+     //    const who = localStorage.getItem('luke');
+     //    console.log(who);
+     //  }
+     //
+     // componentDidMount(){
+     //   this.getSavedFood();
+     // }
 
    onSubmit = (event) => {
       event.preventDefault();
@@ -66,6 +81,7 @@ export default class AppClass extends Component {
     render() {
         const {ingredient1, ingredient2, recipesResult} = this.state;
         const {count = 0, recipes = []} = recipesResult;
+
 
         return (
             <div className="container">
@@ -94,8 +110,13 @@ export default class AppClass extends Component {
                             <button className="btn-success" disabled={!(ingredient1 && ingredient2)}>
                                 Find recipe ideas!
                             </button>
+
                         </div>
                     </form>
+
+                    <button className ="btn-warning" onClick={this.showList}>
+                    Look at saved recipes
+                    </button>
                 </header>
                 <main>
                     {count > 0
@@ -110,7 +131,7 @@ export default class AppClass extends Component {
                                     <img src={recipe.image_url} alt={recipe.title}/>
 
                                 </p>
-                                <label> <input name="rememberMe" type="checkBox" checked={this.state.savedFood} onChange={this.handleChange}/> Save me </label>
+                                <label> <input name="rememberMe" type="checkBox"  onChange={this.handleChange}/> Save me </label>
                             </div>)}
                         </div>
                         : <h3>No results...</h3>
@@ -124,7 +145,7 @@ export default class AppClass extends Component {
 // Original key = 69810c988c6c70e14035a686640d095d
 // https://www.food2fork.com/api/search?key=71bae224f882832faa9eb76d7471cbfd&q=chicken
 // key3 = 6eae1e8c9a3e84f5952d0d0241433020
-//
+//key 4 = fe21f4df437054edfea1b84d1109decf
 //
 // New website if food2fork doesn't play nice
 // ID = 6004b4a7
