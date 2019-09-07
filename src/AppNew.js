@@ -2,23 +2,18 @@
 import React, {Component} from 'react';
 import ls from 'local-storage'
 // import SavedRecipes from './SavedRecipes'
-import RecipeObject from './Angelcakes.js'
-import SavedList from './SavedList.js'
+import ReactDOM from 'react-dom';
 
 
 const API_URL = 'https://www.food2fork.com/api/search?key=44af67ba8f8f1d746620b2c57f0f8741&q=';
 const RESULT_DEFAULT_STATE = {};
 
-
 export default class AppClass extends Component {
-  constructor(props) {
-    super(props);
-  }
-
     state = {
         ingredient1: '',
         ingredient2: '',
         recipesResult: {},
+    //    list: [],
     };
 
     setIngredient1 = (ingredient1) => {
@@ -51,11 +46,17 @@ export default class AppClass extends Component {
       console.log("hello " + result);
      }
 
-    showResult() {
-
-      alert ("do it do it do it")
-    }
-
+     //  getSavedFood(){
+     //    console.log("you made it here");
+     //    const yoda = 'yoda man'
+     //    localStorage.setItem('luke', yoda);
+     //    const who = localStorage.getItem('luke');
+     //    console.log(who);
+     //  }
+     //
+     // componentDidMount(){
+     //   this.getSavedFood();
+     // }
 
    onSubmit = (event) => {
       event.preventDefault();
@@ -80,7 +81,6 @@ export default class AppClass extends Component {
             <div className="container">
                 <header className="App-header">
                     <h1 className="my-5 text-center"> Recipe Genie </h1>
-
                     <h2 className="my-3 text-center"> Making magic happen in the kitchen since 2019 </h2>
                     <h3>What ingredients would you like to cook with today?</h3>
                     <form onSubmit={this.onSubmit}> {}
@@ -108,20 +108,24 @@ export default class AppClass extends Component {
                         </div>
                     </form>
 
-                    <button className ="btn-warning" onClick={this.showResult} >
+                    <button className ="btn-warning" onClick={this.showList}>
                     Look at saved recipes
                     </button>
                 </header>
-
                 <main>
                     {count > 0
                         ? <div>
                             <h3>Showing {count.toLocaleString()} results for {ingredient1} and {ingredient2}</h3>
                             {recipes.map((recipe, index) =>
-
                               <div className="resultbox" key={index}>
-                                <RecipeObject url= {recipe.source_url} title={recipe.title} pub_url={recipe.publisher_url} pub={recipe.publisher} pic={recipe.image_url}/>
+                                <p className="resulttext">
 
+                                    {index + 1}:&nbsp;
+                                    <a id="recipeTitle" href={recipe.source_url}>{recipe.title}</a> by&nbsp;
+                                    <a href={recipe.publisher_url}>{recipe.publisher}</a> &nbsp;
+                                    <img src={recipe.image_url} alt={recipe.title}/>
+
+                                </p>
                                 <label> <input name="rememberMe" type="checkBox"  onChange={this.handleChange}/> Save me </label>
                             </div>)}
                         </div>

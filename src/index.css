@@ -33,11 +33,12 @@ img {
 
 .resultbox {
     display: inline-block;
-    height: 80px;
+    height: 80%;
     width: 100%;
     background: bisque;
     border: 2px black solid;
     position: relative;
+    margin-bottom: 20px;
 }
 
 
