@@ -4,6 +4,7 @@ import ls from 'local-storage'
 // import SavedRecipes from './SavedRecipes'
 import RecipeObject from './Angelcakes.js'
 import SavedList from './SavedList.js'
+import AddToList from './addButton.js'
 
 
 const API_URL = 'https://www.food2fork.com/api/search?key=44af67ba8f8f1d746620b2c57f0f8741&q=';
@@ -12,13 +13,15 @@ const RESULT_DEFAULT_STATE = {};
 
 export default class AppClass extends Component {
   constructor(props) {
-    super(props);
+    super(props)
+
   }
 
     state = {
         ingredient1: '',
         ingredient2: '',
         recipesResult: {},
+        isEmptyState: true
     };
 
     setIngredient1 = (ingredient1) => {
@@ -34,26 +37,20 @@ export default class AppClass extends Component {
     };
 
 
-    handleChange = (event) => {
+    triggerAddToState = () => {
+      this.setState({
+        ...this.state,
+        isEmptyState: false,
+        isAddToState: true
+      })
+    };
 
-      let list = [];
-      let itemUrl = document.getElementById('recipeTitle');
-      console.log(itemUrl);
-      list.push(itemUrl);
-      console.log(list);
-      localStorage.setItem('myKey', itemUrl);
-
-     };
-
-   showList = () => {
-
-      var result=  localStorage.getItem('myKey');
-      console.log("hello " + result);
-     }
-
-    showResult() {
-
-      alert ("do it do it do it")
+    handleState = () => {
+      this.setState({
+        ...this.state,
+        isEmptyState: true,
+        isAddToState: false
+      })
     }
 
 
@@ -101,16 +98,21 @@ export default class AppClass extends Component {
                             placeholder="Choose a second ingredient"
                             onChange={({target}) => this.setIngredient2(target.value)}/>
                         <div className="buttondivlmao">
-                            <button className="btn-success" disabled={!(ingredient1 && ingredient2)}>
+                            <button className="btn-success" disabled={!(ingredient1 && ingredient2)} onClick={this.handleState}>
                                 Find recipe ideas!
                             </button>
 
                         </div>
                     </form>
 
-                    <button className ="btn-warning" onClick={this.showResult} >
-                    Look at saved recipes
-                    </button>
+
+
+                  {this.state.isEmptyState && <AddToList addItem={this.triggerAddToState } /> }
+
+                  {this.state.isAddToState && <SavedList />}
+
+
+
                 </header>
 
                 <main>

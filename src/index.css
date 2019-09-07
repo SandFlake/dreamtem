@@ -41,6 +41,16 @@ img {
     margin-bottom: 20px;
 }
 
+.savedbox {
+    display: inline-block;
+    height: 80%;
+    width: 100%;
+    background: aqua;
+    border: 2px black solid;
+    position: relative;
+    margin-bottom: 20px;
+}
+
 
 .alert-dark {
     background: black;
