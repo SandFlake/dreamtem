@@ -4,10 +4,11 @@ import ls from 'local-storage'
 // import SavedRecipes from './SavedRecipes'
 import RecipeObject from './Angelcakes.js'
 import SavedList from './SavedList.js'
-import AddToList from './addButton.js'
+import SeeFaveList from './FaveList.js'
+import AddToList from './AddButton.js'
 
 
-const API_URL = 'https://www.food2fork.com/api/search?key=44af67ba8f8f1d746620b2c57f0f8741&q=';
+const API_URL = 'https://www.food2fork.com/api/search?key=71bae224f882832faa9eb76d7471cbfd&q=';
 const RESULT_DEFAULT_STATE = {};
 
 
@@ -21,7 +22,10 @@ export default class AppClass extends Component {
         ingredient1: '',
         ingredient2: '',
         recipesResult: {},
-        isEmptyState: true
+        isEmptyState: true,
+        recipeName: '',
+        rememberMe: false
+
     };
 
     setIngredient1 = (ingredient1) => {
@@ -37,11 +41,11 @@ export default class AppClass extends Component {
     };
 
 
-    triggerAddToState = () => {
+    triggerFaveListState = () => {
       this.setState({
         ...this.state,
         isEmptyState: false,
-        isAddToState: true
+        isFaveListState: true
       })
     };
 
@@ -49,9 +53,24 @@ export default class AppClass extends Component {
       this.setState({
         ...this.state,
         isEmptyState: true,
-        isAddToState: false
+        isFaveListState: false
       })
     }
+
+    // handleAdd = () => {
+    //   const {  rememberMe, recipeName } = this.state;
+    //   localStorage.setItem('rememberMe', rememberMe);
+    //   localStorage.setItem('recipeName', rememberMe ? recipeName : "silver");
+    //   {console.log("accessing ls: " + localStorage.getItem('recipeName'));}
+    // {console.log("getting here  in App " + rememberMe + " user: " + recipeName  );}
+    // }
+    //
+    // handleTick = (event) => {
+    //   const input = event.target;
+    //   const value = input.type === 'checkBox'? input.checked : input.value;
+    //   this.setState({ [input.name ]: value });
+    //   {console.log("Cookie time in App");}
+    // }
 
 
    onSubmit = (event) => {
@@ -102,14 +121,21 @@ export default class AppClass extends Component {
                                 Find recipe ideas!
                             </button>
 
+
+                            <AddToList />
+
+                            <button className = "btn-dark" onClick = {this.handleAdd}>
+                                Add me
+                                </button>
+
                         </div>
                     </form>
 
 
 
-                  {this.state.isEmptyState && <AddToList addItem={this.triggerAddToState } /> }
+                  {this.state.isEmptyState && <SeeFaveList seeList={this.triggerFaveListState } /> }
 
-                  {this.state.isAddToState && <SavedList />}
+                  {this.state.isFaveListState && <SavedList />}
 
 
 
@@ -122,9 +148,9 @@ export default class AppClass extends Component {
                             {recipes.map((recipe, index) =>
 
                               <div className="resultbox" key={index}>
-                                <RecipeObject url= {recipe.source_url} title={recipe.title} pub_url={recipe.publisher_url} pub={recipe.publisher} pic={recipe.image_url}/>
+                                <RecipeObject url= {recipe.source_url} title={recipe.title} pub_url={recipe.publisher_url} pub={recipe.publisher} pic={recipe.image_url} value ={this.state.user}/>
 
-                                <label> <input name="rememberMe" type="checkBox"  onChange={this.handleChange}/> Save me </label>
+
                             </div>)}
                         </div>
                         : <h3>No results...</h3>
@@ -135,8 +161,12 @@ export default class AppClass extends Component {
     }
 }
 
-// Original key = 69810c988c6c70e14035a686640d095d
-// https://www.food2fork.com/api/search?key=71bae224f882832faa9eb76d7471cbfd&q=chicken
+  //    <label> <input name="rememberMe" type="checkBox" checked={this.state.rememberMe}  onChange={this.handleTick}/> Save me </label>
+
+// const API_URL = 'https://www.food2fork.com/api/search?key=44af67ba8f8f1d746620b2c57f0f8741&q=';
+
+// Original key = 'https://www.food2fork.com/api/search?key=69810c988c6c70e14035a686640d095d&q=';
+// 'https://www.food2fork.com/api/search?key=71bae224f882832faa9eb76d7471cbfd&q=';
 // key3 = 6eae1e8c9a3e84f5952d0d0241433020
 //key 4 = fe21f4df437054edfea1b84d1109decf
 //

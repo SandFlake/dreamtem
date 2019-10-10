@@ -6,6 +6,9 @@ class SavedList extends Component {
           <div className="savedbox">
 
          <h1> ill tell you what i want but i reaally really waaaant </h1>
+
+
+
          </div>
     )
  }
