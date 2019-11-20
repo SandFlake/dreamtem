@@ -1,16 +1,15 @@
 
 import React, {Component} from 'react';
 import ls from 'local-storage'
-// import SavedRecipes from './SavedRecipes'
 import RecipeObject from './Angelcakes.js'
 import SavedList from './SavedList.js'
 import SeeFaveList from './FaveList.js'
-import AddToList from './AddButton.js'
+import ReadLaterContainer from './ReadLaterContainer'
+
 
 
 const API_URL = 'https://www.food2fork.com/api/search?key=71bae224f882832faa9eb76d7471cbfd&q=';
 const RESULT_DEFAULT_STATE = {};
-
 
 export default class AppClass extends Component {
   constructor(props) {
@@ -24,7 +23,8 @@ export default class AppClass extends Component {
         recipesResult: {},
         isEmptyState: true,
         recipeName: '',
-        rememberMe: false
+        rememberMe: false,
+        readLater: []
 
     };
 
@@ -57,20 +57,18 @@ export default class AppClass extends Component {
       })
     }
 
-    // handleAdd = () => {
-    //   const {  rememberMe, recipeName } = this.state;
-    //   localStorage.setItem('rememberMe', rememberMe);
-    //   localStorage.setItem('recipeName', rememberMe ? recipeName : "silver");
-    //   {console.log("accessing ls: " + localStorage.getItem('recipeName'));}
-    // {console.log("getting here  in App " + rememberMe + " user: " + recipeName  );}
-    // }
-    //
-    // handleTick = (event) => {
-    //   const input = event.target;
-    //   const value = input.type === 'checkBox'? input.checked : input.value;
-    //   this.setState({ [input.name ]: value });
-    //   {console.log("Cookie time in App");}
-    // }
+
+    handleSaveRecipeForLater = (rec) => {
+      let currentReadLaterState = this.state.readLater.slice(0);
+      let newReadLaterState = [...currentReadLaterState, rec]
+      if (!this.state.readLater.includes(rec)) {
+        this.setState({
+          readLater: newReadLaterState,
+        });
+        ls.set('readLater, newReadLaterState')
+      }
+
+    }
 
 
    onSubmit = (event) => {
@@ -85,6 +83,7 @@ export default class AppClass extends Component {
             .then(this.setRecipesResult)
             .catch(console.error)
 
+                //   readLater: ls.get('readLater') || [],
    };
 
     render() {
@@ -122,11 +121,7 @@ export default class AppClass extends Component {
                             </button>
 
 
-                            <AddToList />
 
-                            <button className = "btn-dark" onClick = {this.handleAdd}>
-                                Add me
-                                </button>
 
                         </div>
                     </form>
@@ -136,6 +131,8 @@ export default class AppClass extends Component {
                   {this.state.isEmptyState && <SeeFaveList seeList={this.triggerFaveListState } /> }
 
                   {this.state.isFaveListState && <SavedList />}
+
+                  <ReadLaterContainer readLater = {this.state.readLater} handleReadRecipe = {this.handleReadRecipe} handleDeleteRecipe = {this.handleDeleteRecipe}/>
 
 
 

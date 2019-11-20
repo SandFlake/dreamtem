@@ -46,10 +46,57 @@ img {
     height: 80%;
     width: 100%;
     background: aqua;
-    border: 2px black solid;
+    border: 2px green solid;
     position: relative;
     margin-bottom: 20px;
 }
+
+.savedbox2 {
+    display: inline-block;
+    height: 80%;
+    width: 100%;
+    background: red;
+    border: 22px yellow solid;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.readLaterArticleItem {
+  padding: 0.25em;
+  height: 100px;
+  /* max-height: 220px;
+  min-height: 80px; */
+  width: 98%;
+  display: block;
+  border-bottom: solid 1px #292929;
+
+  margin-bottom: 16px;
+  margin-top: 4px;
+}
+
+.readLaterTitle {
+  font-size: 14px;
+  color: #292929;
+}
+
+.icon {
+
+}
+
+.icon2{
+
+}
+
+.material-icons {
+  margin: 2px 2px;
+  padding: 1px 2px;
+  border-radius: 6px;
+  border: none;
+  font-size: 17px;
+  display:inline;
+  cursor: pointer;
+}
+
 
 
 .alert-dark {
