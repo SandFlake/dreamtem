@@ -1,8 +1,7 @@
 import React from 'react';
 import ls from 'local-storage';
 
-class SavedRecipesForLater extends React.Component {
-
+class SavedRecipesForLater  extends React.Component {
 
   deleteRecipe = () => {
     this.props.handleDeleteRecipe(this.props.savedRecipe)
@@ -14,34 +13,20 @@ class SavedRecipesForLater extends React.Component {
       readLater: ls.get('readLater') || [],
     }));
 
-    {console.log("Getting to save list for later " +  " " + ls.get('readLater'))}
   }
 
   render (){
 
-
     return (
-      <div className = "readLaterArticleItem">
 
-      <div className = "readLaterTitle">
-        <a href = {this.props.url}>
+        <div className = "readLaterArticleItem">
+          <a href={this.props.readLater.publisher_url}>
+            {this.props.readLater.title}
+          </a>
 
-         {this.props.title } </a>
-
-
-
-         <h1> Sup fools  </h1>
-         </div>
-
-
-         </div>
+          </div>
     )
   }
 }
 
 export default SavedRecipesForLater;
-
-
-// handleReadRecipe = () => {
-//   this.props.handleReadRecipe(this.props.savedRecipe)
-// }
