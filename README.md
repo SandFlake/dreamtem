@@ -10,6 +10,7 @@ You can save your favourite recipes for later use, and delete them when you've b
 
 ### Frontend:
  * React
+ * Local storage
 
 ### API:
 
@@ -22,13 +23,21 @@ You will need to request a key from [here](https://www.food2fork.com/about/api) 
 
 ## Installing
 
-After cloning this repo, navigate into your directory in the terminal and run the following command:
+Clone the repo into a directory of your choice. 
+
+After cloning this repo, navigate into your directory in the terminal and run the following command in folder "dreamtem": 
 
 ```
 npm install
 ```
 
-Then
+Then install local storage to the project by running the following command: 
+
+```
+npm install local-storage --save
+```
+
+Then run the project with this command:
 
 ```
 npm start 
