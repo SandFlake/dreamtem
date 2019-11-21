@@ -18,7 +18,9 @@ In order to fetch data from the Food2Fork API, you need to make call to the foll
 
 * `https://www.food2fork.com/api/search?key=<YOUR_KEY_HERE>&q=`
 
-You will need to request a key from [here](https://www.food2fork.com/about/api) and put it in the above URL in the <YOUR_KEY_HERE> space.
+A key is provided in the project, but if you need to make more than 50 requests calls,
+you will need to request a key from [here](https://www.food2fork.com/about/api) and put it in the above URL in the <YOUR_KEY_HERE> space.
+Unfortunately, Food2Fork will be shutting down on the 30th November, 2019. After that we hope to find another equally as great site. 
 
 
 ## Installing
