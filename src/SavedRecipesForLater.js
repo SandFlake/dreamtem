@@ -3,16 +3,12 @@ import ls from 'local-storage';
 
 class SavedRecipesForLater  extends React.Component {
 
-  deleteRecipe = () => {
-    this.props.handleDeleteRecipe(this.props.savedRecipe)
+  constructor(props){
+    super(props)
   }
 
-  componentDidMount() {
-    fetch('https://www.food2fork.com/api/search?key=71bae224f882832faa9eb76d7471cbfd&q=')
-    .then(json => this.setState({
-      readLater: ls.get('readLater') || [],
-    }));
-
+  handleDelete = () => {
+    this.props.handleDeleteRecipe(this.props.readLater)
   }
 
   render (){
@@ -20,9 +16,14 @@ class SavedRecipesForLater  extends React.Component {
     return (
 
         <div className = "readLaterArticleItem">
-          <a href={this.props.readLater.publisher_url}>
+          <a href={this.props.readLater.source_url}>
             {this.props.readLater.title}
           </a>
+
+          <button className = "btn-danger btn-space" onClick={(e => this.handleDelete())}>
+
+          Delete Me!
+          </button>
 
           </div>
     )
@@ -30,3 +31,12 @@ class SavedRecipesForLater  extends React.Component {
 }
 
 export default SavedRecipesForLater;
+
+//
+// componentDidMount() {
+//   fetch('https://www.food2fork.com/api/search?key=71bae224f882832faa9eb76d7471cbfd&q=')
+//   .then(json => this.setState({
+//     readLater: ls.get('readLater') || [],
+//   }));
+//
+// }

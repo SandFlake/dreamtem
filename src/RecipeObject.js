@@ -8,7 +8,7 @@ class RecipeObject extends Component {
   }
 
   handleSave = () => {
-    this.props.handleReadLater(this.props.recipe)
+    this.props.handleSaveRecipe(this.props.recipe)
   }
 
   render() {
@@ -20,7 +20,7 @@ class RecipeObject extends Component {
         <a href={this.props.pub_url}>  {this.props.pub} </a> &nbsp;
         <img src={this.props.pic}/>
 
-        <button className = "btn-dark" onClick={(e) => this.handleSave()} >
+        <button className = "btn-dark btn-space" onClick={(e) => this.handleSave()} >
         Save Me
         </button>
 

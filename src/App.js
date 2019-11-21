@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import ls from 'local-storage'
-import RecipeObject from './RecipeItem.js'
-import SeeFaveList from './FaveList.js'
-import ReadLaterContainer from './ReadLaterContainer'
+import RecipeObject from './RecipeObject.js'
+import SeeFaveList from './FaveListButton.js'
+import SavedRecipeContainer from './SavedRecipeContainer'
 
-const API_URL = 'https://www.food2fork.com/api/search?key=6eae1e8c9a3e84f5952d0d0241433020&q=';
+const API_URL = 'https://www.food2fork.com/api/search?key=69810c988c6c70e14035a686640d095d&q=';
 const RESULT_DEFAULT_STATE = {};
 
 export default class AppClass extends Component {
@@ -54,7 +54,7 @@ export default class AppClass extends Component {
     })
   }
 
-  handleReadLater = (recipe) => {
+  handleSaveRecipe = (recipe) => {
     let currentReadLaterState = this.state.readLater.slice(0);
     let newReadLaterState = [...currentReadLaterState, recipe]
 
@@ -66,6 +66,16 @@ export default class AppClass extends Component {
     }
   }
 
+  handleDeleteRecipe = (recipe) => {
+    const beGone = this.state.readLater.slice(0)
+    beGone.splice(beGone.indexOf(recipe), 1)
+    this.setState({
+      readLater: beGone,
+    })
+    ls.set('readLater', beGone)
+  }
+
+
 
   onSubmit = (event) => {
     event.preventDefault();
@@ -75,7 +85,8 @@ export default class AppClass extends Component {
 
     fetch(`${API_URL}${ingredient1},${ingredient2}`)
     .then(_ => _.json())
-    .then(this.setRecipesResult, this.setFaveList)
+    .then(this.setRecipesResult, this.setFaveList, this.setState ({
+    readLater: ls.get('readLater') || [] }))
     .catch(console.error)
   };
 
@@ -109,7 +120,7 @@ export default class AppClass extends Component {
             placeholder="Choose a second ingredient"
             onChange={({target}) => this.setIngredient2(target.value)}/>
           <div className="buttondivlmao">
-            <button className="btn-success" disabled={!(ingredient1 && ingredient2)} onClick={this.handleState}>
+            <button className="btn-success btn-space" disabled={!(ingredient1 && ingredient2)} onClick={this.handleState}>
             Find recipe ideas!
             </button>
 
@@ -118,7 +129,7 @@ export default class AppClass extends Component {
 
       {this.state.isEmptyState && <SeeFaveList seeList={this.triggerFaveListState } /> }
 
-      {this.state.isFaveListState &&  <ReadLaterContainer readLater = {this.state.readLater} handleDeleteRecipe = {this.handleDeleteRecipe}/>}
+      {this.state.isFaveListState &&  <SavedRecipeContainer readLater = {this.state.readLater} handleDeleteRecipe = {this.handleDeleteRecipe}/>}
 
       </header>
 
@@ -129,7 +140,7 @@ export default class AppClass extends Component {
             {recipes.map((recipe, index) =>
 
               <div className="resultbox" key={index}>
-              <RecipeObject recipe = {recipe} key={index}  url= {recipe.source_url} title={recipe.title} readLater={this.state.readLater} handleReadLater={this.handleReadLater} pub_url={recipe.publisher_url} pub={recipe.publisher} pic={recipe.image_url} value ={this.state.user}/>
+              <RecipeObject recipe = {recipe} key={index}  url= {recipe.source_url} title={recipe.title} readLater={this.state.readLater} handleSaveRecipe={this.handleSaveRecipe} handleDeleteRecipe={this.handleDeleteRecipe} pub_url={recipe.publisher_url} pub={recipe.publisher} pic={recipe.image_url} value ={this.state.user}/>
 
               </div>  )}
           </div>
@@ -141,10 +152,10 @@ export default class AppClass extends Component {
     }
   }
 
-// const API_URL = 'https://www.food2fork.com/api/search?key=44af67ba8f8f1d746620b2c57f0f8741&q=';
 
-// Original key = 'https://www.food2fork.com/api/search?key=69810c988c6c70e14035a686640d095d&q=';
-// 'https://www.food2fork.com/api/search?key=71bae224f882832faa9eb76d7471cbfd&q=';
+
+// Original key = 69810c988c6c70e14035a686640d095d;
+// key2 = 71bae224f882832faa9eb76d7471cbfd;
 // key3 = 6eae1e8c9a3e84f5952d0d0241433020
 //key 4 = fe21f4df437054edfea1b84d1109decf
 //

@@ -26,7 +26,6 @@ img {
     max-width: 75%;
 }
 
-
 .buttondivlmao {
     text-align: center;
 }
@@ -41,7 +40,6 @@ img {
     margin-bottom: 20px;
 }
 
-
 .savedbox2 {
     display: inline-block;
     height: 80%;
@@ -52,6 +50,7 @@ img {
     margin-bottom: 20px;
     padding:0.25em;
     margin-top:20px;
+    padding-bottom: 1em;
 }
 
 .readLaterArticleItem {
@@ -71,12 +70,8 @@ img {
   color: #292929;
 }
 
-.icon {
-
-}
-
-.icon2{
-
+.btn-space{
+  margin:8px;
 }
 
 .material-icons {
@@ -88,7 +83,6 @@ img {
   display:inline;
   cursor: pointer;
 }
-
 
 
 .alert-dark {

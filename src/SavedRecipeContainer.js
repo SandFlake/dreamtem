@@ -1,7 +1,7 @@
 import React from 'react';
 import SavedRecipesForLater from './SavedRecipesForLater.js'
 
-const ReadLaterContainer = ({readLater, handleDeleteRecipe}) => (
+const SavedRecipeContainer = ({readLater, handleDeleteRecipe}) => (
 
   <div className="savedbox2">
 
@@ -12,4 +12,4 @@ const ReadLaterContainer = ({readLater, handleDeleteRecipe}) => (
     </div>
 );
 
-export default ReadLaterContainer;
+export default SavedRecipeContainer;
