@@ -16,8 +16,8 @@ class SavedRecipesForLater  extends React.Component {
     return (
 
         <div className = "readLaterArticleItem">
-          <a href={this.props.readLater.source_url}>
-            {this.props.readLater.title}
+          <a href={this.props.readLater.uri}>
+            {this.props.readLater.label}
           </a>
 
           <button className = "btn-danger btn-space" onClick={(e => this.handleDelete())}>

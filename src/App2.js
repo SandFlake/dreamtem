@@ -4,13 +4,7 @@ import RecipeObject from './RecipeObject.js'
 import SeeFaveList from './FaveListButton.js'
 import SavedRecipeContainer from './SavedRecipeContainer'
 
-
-
-const API_URL = 'https://api.edamam.com/search?q=${ingredient1},${ingredient2}&app_id=6004b4a7&app_key=fa6b448896dc28a62ede878f372078ac&from=0&to=30'
-const API_URL1 = 'https://api.edamam.com/search?q='
-const API_URL2 = '&app_id=6004b4a7&app_key=fa6b448896dc28a62ede878f372078ac&from=0&to=30'
-
-
+const API_PUPPY = "http://www.recipepuppy.com/api/?i="
 const RESULT_DEFAULT_STATE = {};
 
 export default class AppClass extends Component {
@@ -89,7 +83,7 @@ export default class AppClass extends Component {
 
     this.setRecipesResult(RESULT_DEFAULT_STATE);
 
-    fetch(`${API_URL1}${ingredient1},${ingredient2}${API_URL2}`)
+    fetch(`${API_PUPPY}${ingredient1},${ingredient2}&p=3`)
     .then(_ => _.json())
     .then(this.setRecipesResult, this.setFaveList, this.setState ({
     readLater: ls.get('readLater') || [] }))
@@ -99,7 +93,7 @@ export default class AppClass extends Component {
 
   render() {
     const {ingredient1, ingredient2, recipesResult} = this.state;
-    const {count = 0,  q= null, hits=[], recipe={} } = recipesResult;
+    const {count = 0, recipes = []} = recipesResult;
 
     return (
       <div className="container">
@@ -143,33 +137,21 @@ export default class AppClass extends Component {
       {count > 0
         ? <div>
             <h3>Showing {count.toLocaleString()} results for {ingredient1} and {ingredient2}</h3>
-            <h2> Showing {q.toLocaleString()} </h2>
-            <h2> Hit 1 {hits[0].recipe.label} </h2>
-            <h2> Hit 1 {hits[0].recipe.uri} </h2>
-            <h2> Hit 2 {hits[1].recipe.label} </h2>
 
-              {Object.keys(hits).map(key => (
-                <RecipeObject key={key} recipe = {recipe[key]} url={recipe.uri}/>
-              ))}
-
-
-           {hits.map((recipe, index) =>
-             <div className = "resultbox" key={index}>
-
-                  <RecipeObject hits = {recipe} key = {index}
-                   url = {recipe.uri}
-                   title = {recipe.label} readLater={this.state.readLater}
-                   handleSaveRecipe= {this.handleSaveRecipe}
-                   handleDeleteRecipe={this.handleDeleteRecipe}
-                    pub={recipe.uri} pub_url={recipe.uri}/>
-
-
-
-             </div>
-           )}
-
-
-
+            {recipes.map(item => {
+    return (
+      <div key = {item.results}>
+       {item.recipe.map(product => {
+         return (
+           <div key = {product.uri}>
+           <p> {product.label}</p>
+           <p> Hello </p>
+           </div>
+         );
+       })}
+       </div>
+    )
+  })}
 
           </div>
           : <h3>No results...</h3>
@@ -179,3 +161,80 @@ export default class AppClass extends Component {
       );
     }
   }
+
+
+  <RecipeObject hits = {recipe} key = {index}
+   url = {recipe.uri}
+   title = {recipe.label} readLater={this.state.readLater}
+   handleSaveRecipe= {this.handleSaveRecipe}
+   handleDeleteRecipe={this.handleDeleteRecipe}
+    pub={recipe.uri} pub_url={recipe.uri}/>
+
+
+
+    <main>
+    {count > 0
+      ? <div>
+          <h3>Showing {count.toLocaleString()} results for {ingredient1} and {ingredient2}</h3>
+          <h2> Showing {q.toLocaleString()} </h2>
+
+         {hits.map((recipe, index) =>
+           <div className = "resultbox" key={index}>
+
+                <RecipeObject hits = {recipe key = {index}
+                 url = {recipe.uri}
+                 title = {recipe.label} readLater={this.state.readLater}
+                 handleSaveRecipe= {this.handleSaveRecipe}
+                 handleDeleteRecipe={this.handleDeleteRecipe}
+                  pub={recipe.uri} pub_url={recipe.uri}/>
+
+
+
+
+
+        </div>
+        : <h3>No results...</h3>
+      }
+      </main>
+
+
+
+
+  , { Component } from 'react';
+  import data from "./data";
+
+  class Example2 extends Component {
+  	render() {
+  		return (
+              <div>
+                  {
+  					data.Experiences.map((experience, i) => {
+  						return (
+  							<div key={i}>
+  								<div>
+  									<a href={experience.url}>
+  										<img src={experience.logo} alt={experience.companyName} />
+  									</a>
+  									<div>
+  										<div>
+  											<a href={experience.url}>{experience.companyName}</a>
+  										</div>
+  											{experience.roles.map(function (role, i) {
+  												return <div key={i}>
+  													<h5>{role.title}</h5>
+  													<span>{role.startDate}</span>
+  													<span>{role.location}</span>
+  													<p>{role.description}</p>
+  												</div>
+  											})}
+  									</div>
+  								</div>
+  							</div>
+  						);
+  					})
+  				}
+              </div>
+          );
+      }
+  }
+  export default Example2;
