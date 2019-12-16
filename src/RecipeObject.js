@@ -9,13 +9,13 @@ class RecipeObject extends Component {
     handleSave = () => {
         this.props.handleSaveRecipe(this.props.hits.recipe)
     };
-
+ 
     render() {
         return (
             <p className="resulttext">
                 <a href={this.props.hits.recipe.url}>  {this.props.hits.recipe.label}  </a> by &nbsp;
                 <a href={this.props.hits.recipe.pub_url}>  {this.props.hits.recipe.pub} </a> &nbsp;
-                <img src={this.props.hits.recipe.image}/>
+                <img src={this.props.hits.recipe.image} alt={this.props.hits.recipe.label}/>
 
                 <button className="btn-dark btn-space" onClick={(e) => this.handleSave()}>
                     Save Me

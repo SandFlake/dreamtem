@@ -45,7 +45,7 @@ export default class AppClass extends Component {
             ...this.state,
             isEmptyState: false,
             isFaveListState: true,
-              readLater: ls.get('readLater') || []
+            readLater: ls.get('readLater') || []
         })
     };
 
@@ -96,7 +96,7 @@ export default class AppClass extends Component {
 
     render() {
         const {ingredient1, ingredient2, recipesResult} = this.state;
-        const {count = 0, q = null, hits = []} = recipesResult;
+        const {count = 0, hits = []} = recipesResult;
 
         return (
             <div className="container">
