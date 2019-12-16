@@ -4,9 +4,6 @@ import RecipeObject from './RecipeObject.js'
 import SeeFaveList from './FaveListButton.js'
 import SavedRecipeContainer from './SavedRecipeContainer'
 
-
-const API_URL = 'https://api.edamam.com/search?q=${ingredient1},${ingredient2}&app_id=6004b4a7&' +
-    'app_key=fa6b448896dc28a62ede878f372078ac&from=0&to=30';
 const API_URL1 = 'https://api.edamam.com/search?q=';
 const API_URL2 = '&app_id=6004b4a7&app_key=fa6b448896dc28a62ede878f372078ac&from=0&to=30';
 
@@ -47,7 +44,8 @@ export default class AppClass extends Component {
         this.setState({
             ...this.state,
             isEmptyState: false,
-            isFaveListState: true
+            isFaveListState: true,
+              readLater: ls.get('readLater') || []
         })
     };
 
@@ -98,7 +96,7 @@ export default class AppClass extends Component {
 
     render() {
         const {ingredient1, ingredient2, recipesResult} = this.state;
-        const {count = 0, q = null, hits = [], recipe = {}} = recipesResult;
+        const {count = 0, q = null, hits = []} = recipesResult;
 
         return (
             <div className="container">
@@ -141,8 +139,8 @@ export default class AppClass extends Component {
                 <main>
                     {count > 0
                         ? <div>
-                            <h3>Showing {count.toLocaleString()} results for {ingredient1} and {ingredient2}</h3>
-                            <h2> Showing {q.toLocaleString()} </h2>
+                            <h3> Found {count.toLocaleString()} results for {ingredient1} and {ingredient2}</h3>
+
                             {
                                 hits.map((recipe, index) => {
                                         return (

@@ -14,13 +14,13 @@ You can save your favourite recipes for later use, and delete them when you've b
 
 ### API:
 
-In order to fetch data from the Food2Fork API, you need to make call to the following URL:
+In order to fetch data from the Edamam API, you need to make call to the following URL:
 
-* `https://www.food2fork.com/api/search?key=<YOUR_KEY_HERE>&q=`
+* 'https://api.edamam.com/search?q=${ingredient1},${ingredient2}&app_id=<YOUR_APP_ID_HERE>&app_key=<YOUR_KEY_HERE>&from=0&to=30';
 
 A key is provided in the project, but if you need to make more than 50 requests calls,
-you will need to request a key from [here](https://www.food2fork.com/about/api) and put it in the above URL in the <YOUR_KEY_HERE> space.
-Unfortunately, Food2Fork will be shutting down on the 30th November, 2019. After that we hope to find another equally as great site. 
+you will need to request a key from [here](https://www.edamam.com/) and put it in the above URL in the <YOUR_KEY_HERE> space.
+
 
 
 ## Installing

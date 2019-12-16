@@ -7,7 +7,7 @@ class RecipeObject extends Component {
     }
 
     handleSave = () => {
-        this.props.handleSaveRecipe(this.props.recipe)
+        this.props.handleSaveRecipe(this.props.hits.recipe)
     };
 
     render() {
